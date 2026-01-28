@@ -25,14 +25,13 @@ FROM mcr.microsoft.com/dotnet/sdk:10.0 AS dotnet-build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-# Copy solution and project files for restore
-COPY src/api/PulseWord.slnx .
+# Copy project files for restore (exclude test projects for production build)
 COPY src/api/PulseWord.Core/PulseWord.Core.csproj PulseWord.Core/
 COPY src/api/PulseWord.Infrastructure/PulseWord.Infrastructure.csproj PulseWord.Infrastructure/
 COPY src/api/PulseWord.Api/PulseWord.Api.csproj PulseWord.Api/
 
-# Restore dependencies
-RUN dotnet restore
+# Restore dependencies for API project only
+RUN dotnet restore PulseWord.Api/PulseWord.Api.csproj
 
 # Copy the rest of the source code
 COPY src/api/ .
