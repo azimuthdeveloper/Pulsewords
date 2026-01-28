@@ -1,22 +1,27 @@
-<div class="game-container">
+<div class="game-container" [appAnnounce]="announcement()">
   <header>
     <h1>PulseWord</h1>
-    <div class="timer" data-testid="timer">
+    <div class="timer" data-testid="timer" aria-live="polite" aria-label="Time remaining">
       Time: {{ status().timeLeft }}s
     </div>
   </header>
 
-  <div class="board">
-    @for (row of status().board; track $index) {
+  <div class="board" #board tabindex="0" aria-label="Game board" role="grid">
+    @for (row of status().board; track $index; let rowIndex = $index) {
       <div 
         class="game-row" 
+        role="row"
         [attr.data-testid]="'game-row'" 
-        [attr.data-active]="$index === status().currentRow">
-        @for (tile of row; track $index) {
+        [attr.data-active]="rowIndex === status().currentRow"
+        [attr.aria-label]="'Row ' + (rowIndex + 1)">
+        @for (tile of row; track $index; let tileIndex = $index) {
           <div 
             class="tile" 
+            role="gridcell"
             [class]="getTileClass(tile.state)"
             [class.has-letter]="tile.letter !== ''"
+            [attr.aria-label]="getAriaLabel(tile, rowIndex, tileIndex)"
+            [attr.aria-live]="rowIndex === status().currentRow ? 'polite' : null"
             data-testid="tile">
             {{ tile.letter }}
           </div>
@@ -33,11 +38,11 @@
   </div>
 
   @if (status().isGameOver) {
-    <div class="modal-overlay">
+    <div class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="game-over-title">
       <div class="modal-content">
-        <h2>{{ status().message }}</h2>
+        <h2 id="game-over-title">{{ status().message }}</h2>
         <p>Guesses: {{ status().currentRow }}</p>
-        <button (click)="window.location.reload()">Play Again</button>
+        <button (click)="window.location.reload()" cdkFocusInitial>Play Again</button>
       </div>
     </div>
   }

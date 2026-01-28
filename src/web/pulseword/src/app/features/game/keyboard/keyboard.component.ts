@@ -29,4 +29,19 @@ export class KeyboardComponent {
     if (!state || state === 'unused') return '';
     return `key-${state}`;
   }
+
+  getAriaLabel(key: string): string {
+    if (key === 'ENTER') return 'Enter';
+    if (key === 'BACKSPACE') return 'Backspace';
+    const state = this.letterStates()[key];
+    if (state && state !== 'unused') {
+      return `${key}, ${state}`;
+    }
+    return key;
+  }
+
+  getAriaPressed(key: string): boolean | null {
+    const state = this.letterStates()[key];
+    return state && state !== 'unused' ? true : false;
+  }
 }

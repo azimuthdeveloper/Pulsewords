@@ -4,11 +4,14 @@
       @for (key of row; track key) {
         <button 
           class="key" 
+          type="button"
           [class]="getKeyStateClass(key)"
           [attr.data-testid]="'key-' + key.toLowerCase()"
+          [attr.aria-label]="getAriaLabel(key)"
+          [attr.aria-pressed]="getAriaPressed(key)"
           (click)="onKeyClick(key)">
           @if (key === 'BACKSPACE') {
-            <span>⌫</span>
+            <span aria-hidden="true">⌫</span>
           } @else {
             {{ key }}
           }

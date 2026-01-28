@@ -1,7 +1,5 @@
 @use '@angular/material' as mat;
 
-@include mat.core();
-
 // PulseWord Branding Colors
 // Green: #6aaa64, Yellow: #c9b458, Gray: #787c7e
 
@@ -9,81 +7,19 @@ $pulse-green: #6aaa64;
 $pulse-yellow: #c9b458;
 $pulse-gray: #787c7e;
 
-// Define custom palettes
-$pulse-primary-palette: (
-  50: #edf5ed,
-  100: #d1e5d1,
-  200: #b3d3b3,
-  300: #94c194,
-  400: #7fb47f,
-  500: $pulse-green,
-  600: #62a25c,
-  700: #589852,
-  800: #4e8e48,
-  900: #3d7d37,
-  contrast: (
-    50: rgba(black, 0.87),
-    100: rgba(black, 0.87),
-    200: rgba(black, 0.87),
-    300: rgba(black, 0.87),
-    400: rgba(black, 0.87),
-    500: white,
-    600: white,
-    700: white,
-    800: white,
-    900: white,
-  )
-);
+// Use Angular Material's built-in themes as base
+@include mat.core();
 
-$pulse-accent-palette: (
-  50: #f9f6eb,
-  100: #f0e9cd,
-  200: #e6dbac,
-  300: #dbcd8b,
-  400: #d2c371,
-  500: $pulse-yellow,
-  600: #c3ad50,
-  700: #bca447,
-  800: #b59b3d,
-  900: #a98b2d,
-  contrast: (
-    50: rgba(black, 0.87),
-    100: rgba(black, 0.87),
-    200: rgba(black, 0.87),
-    300: rgba(black, 0.87),
-    400: rgba(black, 0.87),
-    500: white,
-    600: white,
-    700: white,
-    800: white,
-    900: white,
-  )
-);
-
-// Define themes
-$light-theme: mat.define-light-theme((
+// Light theme using Azure color scheme as base
+@include mat.theme((
   color: (
-    primary: mat.define-palette($pulse-primary-palette),
-    accent: mat.define-palette($pulse-accent-palette),
+    theme-type: light,
+    primary: mat.$azure-palette,
+    tertiary: mat.$green-palette,
   ),
-  typography: mat.define-typography-config(),
+  typography: Roboto,
   density: 0,
 ));
-
-$dark-theme: mat.define-dark-theme((
-  color: (
-    primary: mat.define-palette($pulse-primary-palette),
-    accent: mat.define-palette($pulse-accent-palette),
-  ),
-  typography: mat.define-typography-config(),
-  density: 0,
-));
-
-// High contrast colors (WCAG AAA compliant)
-$hc-primary: #00ff00;
-$hc-yellow: #ffff00;
-$hc-background: #000000;
-$hc-text: #ffffff;
 
 :root {
   --tile-correct: #{$pulse-green};
@@ -95,14 +31,19 @@ $hc-text: #ffffff;
 }
 
 body.theme-light {
-  @include mat.all-component-themes($light-theme);
   background-color: #ffffff;
   color: #000000;
   --tile-empty-border: #d3d6da;
 }
 
 body.theme-dark {
-  @include mat.all-component-themes($dark-theme);
+  @include mat.theme((
+    color: (
+      theme-type: dark,
+      primary: mat.$azure-palette,
+      tertiary: mat.$green-palette,
+    ),
+  ));
   background-color: #121213;
   color: #ffffff;
   --tile-empty-border: #3a3a3c;
@@ -110,11 +51,16 @@ body.theme-dark {
 }
 
 body.theme-high-contrast {
-  @include mat.all-component-themes($dark-theme);
-  background-color: $hc-background;
-  color: $hc-text;
-  --tile-correct: #{$hc-primary};
-  --tile-present: #{$hc-yellow};
+  @include mat.theme((
+    color: (
+      theme-type: dark,
+      primary: mat.$green-palette,
+    ),
+  ));
+  background-color: #000000;
+  color: #ffffff;
+  --tile-correct: #00ff00;
+  --tile-present: #ffff00;
   --tile-absent: #888888;
   --tile-text: #000000;
   --tile-empty-border: #ffffff;
@@ -173,4 +119,39 @@ html, body {
     border-color: var(--tile-absent);
     color: var(--tile-text);
   }
+}
+
+// Feedback classes for compatibility with tests
+.feedback-correct {
+  background-color: var(--tile-correct) !important;
+  border-color: var(--tile-correct) !important;
+  color: var(--tile-text) !important;
+}
+
+.feedback-wrong-position {
+  background-color: var(--tile-present) !important;
+  border-color: var(--tile-present) !important;
+  color: var(--tile-text) !important;
+}
+
+.feedback-incorrect {
+  background-color: var(--tile-absent) !important;
+  border-color: var(--tile-absent) !important;
+  color: var(--tile-text) !important;
+}
+
+// Keyboard key feedback
+.key-correct {
+  background-color: var(--tile-correct) !important;
+  color: var(--tile-text) !important;
+}
+
+.key-present {
+  background-color: var(--tile-present) !important;
+  color: var(--tile-text) !important;
+}
+
+.key-absent {
+  background-color: var(--tile-absent) !important;
+  color: var(--tile-text) !important;
 }

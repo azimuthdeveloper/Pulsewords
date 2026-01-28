@@ -2,9 +2,15 @@
   <nav>
     <a routerLink="/" class="logo">PulseWord</a>
     <div class="nav-links">
-      <a routerLink="/game" routerLinkActive="active">Game</a>
-      <a routerLink="/leaderboard" routerLinkActive="active">Leaderboard</a>
-      <a routerLink="/profile/me" routerLinkActive="active">Profile</a>
+      @if (authService.isAuthenticated()) {
+        <a routerLink="/game" routerLinkActive="active">Game</a>
+        <a routerLink="/leaderboard" routerLinkActive="active">Leaderboard</a>
+        <a routerLink="/profile/me" routerLinkActive="active">Profile</a>
+        <span class="user-greeting">Hi, {{ authService.currentUser()?.username }}</span>
+        <button class="logout-btn" (click)="logout()">Logout</button>
+      } @else {
+        <a routerLink="/login" routerLinkActive="active">Login</a>
+      }
       <app-theme-toggle></app-theme-toggle>
     </div>
   </nav>
@@ -16,9 +22,10 @@
 
 <style>
   .app-header {
-    background-color: #333;
-    color: white;
+    background-color: var(--mat-sys-primary-container, #333);
+    color: var(--mat-sys-on-primary-container, white);
     padding: 1rem 2rem;
+    border-bottom: 1px solid var(--tile-empty-border);
   }
 
   nav {
@@ -33,11 +40,16 @@
     font-size: 1.5rem;
     font-weight: bold;
     text-decoration: none;
-    color: white;
+    color: inherit;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
   }
 
   .nav-links a {
-    color: white;
+    color: inherit;
     text-decoration: none;
     margin-left: 1rem;
     padding: 0.5rem 1rem;
@@ -45,7 +57,30 @@
   }
 
   .nav-links a.active {
-    background-color: #555;
+    background-color: var(--mat-sys-secondary-container, #555);
+    color: var(--mat-sys-on-secondary-container, inherit);
+  }
+
+  .user-greeting {
+    margin-left: 1rem;
+    font-size: 0.9rem;
+    color: inherit;
+    opacity: 0.8;
+  }
+
+  .logout-btn {
+    background: none;
+    border: 1px solid currentColor;
+    color: inherit;
+    margin-left: 1rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .logout-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
   }
 
   main {
