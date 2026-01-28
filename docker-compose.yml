@@ -11,9 +11,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:8080
       - ConnectionStrings__PulseWord=${DATABASE_URL}
-      - JwtSettings__Key=${JWT_SECRET_KEY}
-      - JwtSettings__Issuer=${JWT_ISSUER:-pulseword}
-      - JwtSettings__Audience=${JWT_AUDIENCE:-pulseword-users}
+      - JwtSettings__Key=CFOvVW3sGpMwmb6pseH94WQD+sCjJJK+3gkBy7oZolE=
+      - JwtSettings__Issuer=pulseword
+      - JwtSettings__Audience=pulseword-users
     restart: unless-stopped
     networks:
       - dokploy-network
