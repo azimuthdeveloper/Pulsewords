@@ -4,20 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <!-- Disable ALL default glob patterns to fix SDK 10.0.102 Docker build issues -->
-    <EnableDefaultItems>false</EnableDefaultItems>
-    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-    <EnableDefaultContentItems>false</EnableDefaultContentItems>
-    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
   </PropertyGroup>
-
-  <!-- Explicit compile includes -->
-  <ItemGroup>
-    <Compile Include="Data\*.cs" />
-    <Compile Include="Data\Migrations\*.cs" />
-    <Compile Include="Services\*.cs" />
-    <Compile Include="*.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PulseWord.Core\PulseWord.Core.csproj" />
@@ -25,10 +12,6 @@
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.2" Condition="'$(Configuration)' != 'Release'">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.15.0" />
   </ItemGroup>
