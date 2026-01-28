@@ -1,0 +1,66 @@
+:host {
+  display: block;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  touch-action: manipulation;
+}
+
+.key {
+  font-family: inherit;
+  font-weight: bold;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  height: 58px;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+  background-color: #d3d6da;
+  color: #000;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  -webkit-tap-highlight-color: rgba(0,0,0,0.3);
+  transition: all 0.1s ease-in-out;
+
+  &:active {
+    background-color: #bbb;
+  }
+
+  &.key-correct {
+    background-color: #6aaa64;
+    color: white;
+  }
+
+  &.key-wrong-position {
+    background-color: #c9b458;
+    color: white;
+  }
+
+  &.key-incorrect {
+    background-color: #787c7e;
+    color: white;
+  }
+}
+
+button[data-testid="key-enter"], 
+button[data-testid="key-backspace"] {
+  flex: 1.5;
+  font-size: 12px;
+}

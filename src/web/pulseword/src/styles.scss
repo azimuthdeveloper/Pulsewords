@@ -1,0 +1,176 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+// PulseWord Branding Colors
+// Green: #6aaa64, Yellow: #c9b458, Gray: #787c7e
+
+$pulse-green: #6aaa64;
+$pulse-yellow: #c9b458;
+$pulse-gray: #787c7e;
+
+// Define custom palettes
+$pulse-primary-palette: (
+  50: #edf5ed,
+  100: #d1e5d1,
+  200: #b3d3b3,
+  300: #94c194,
+  400: #7fb47f,
+  500: $pulse-green,
+  600: #62a25c,
+  700: #589852,
+  800: #4e8e48,
+  900: #3d7d37,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  )
+);
+
+$pulse-accent-palette: (
+  50: #f9f6eb,
+  100: #f0e9cd,
+  200: #e6dbac,
+  300: #dbcd8b,
+  400: #d2c371,
+  500: $pulse-yellow,
+  600: #c3ad50,
+  700: #bca447,
+  800: #b59b3d,
+  900: #a98b2d,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  )
+);
+
+// Define themes
+$light-theme: mat.define-light-theme((
+  color: (
+    primary: mat.define-palette($pulse-primary-palette),
+    accent: mat.define-palette($pulse-accent-palette),
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+$dark-theme: mat.define-dark-theme((
+  color: (
+    primary: mat.define-palette($pulse-primary-palette),
+    accent: mat.define-palette($pulse-accent-palette),
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+// High contrast colors (WCAG AAA compliant)
+$hc-primary: #00ff00;
+$hc-yellow: #ffff00;
+$hc-background: #000000;
+$hc-text: #ffffff;
+
+:root {
+  --tile-correct: #{$pulse-green};
+  --tile-present: #{$pulse-yellow};
+  --tile-absent: #{$pulse-gray};
+  --tile-text: #ffffff;
+  --tile-empty-border: #d3d6da;
+  --tile-filled-border: #878a8c;
+}
+
+body.theme-light {
+  @include mat.all-component-themes($light-theme);
+  background-color: #ffffff;
+  color: #000000;
+  --tile-empty-border: #d3d6da;
+}
+
+body.theme-dark {
+  @include mat.all-component-themes($dark-theme);
+  background-color: #121213;
+  color: #ffffff;
+  --tile-empty-border: #3a3a3c;
+  --tile-filled-border: #565758;
+}
+
+body.theme-high-contrast {
+  @include mat.all-component-themes($dark-theme);
+  background-color: $hc-background;
+  color: $hc-text;
+  --tile-correct: #{$hc-primary};
+  --tile-present: #{$hc-yellow};
+  --tile-absent: #888888;
+  --tile-text: #000000;
+  --tile-empty-border: #ffffff;
+  --tile-filled-border: #ffffff;
+
+  .tile {
+    border-width: 2px !important;
+  }
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+// Global Tile Styles
+.tile {
+  width: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  line-height: 2rem;
+  font-weight: bold;
+  vertical-align: middle;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  user-select: none;
+  border: 2px solid var(--tile-empty-border);
+  background-color: transparent;
+  color: inherit;
+
+  &[data-state='empty'] {
+    border-color: var(--tile-empty-border);
+  }
+
+  &[data-state='tbd'] {
+    border-color: var(--tile-filled-border);
+  }
+
+  &[data-state='correct'] {
+    background-color: var(--tile-correct);
+    border-color: var(--tile-correct);
+    color: var(--tile-text);
+  }
+
+  &[data-state='present'] {
+    background-color: var(--tile-present);
+    border-color: var(--tile-present);
+    color: var(--tile-text);
+  }
+
+  &[data-state='absent'] {
+    background-color: var(--tile-absent);
+    border-color: var(--tile-absent);
+    color: var(--tile-text);
+  }
+}

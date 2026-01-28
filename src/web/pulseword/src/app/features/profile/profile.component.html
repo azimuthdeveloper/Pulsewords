@@ -1,0 +1,53 @@
+<div class="profile-container" *ngIf="profile$ | async as profile">
+  <mat-card class="profile-card">
+    <mat-card-header>
+      <div mat-card-avatar class="profile-avatar" [style.background-image]="'url(' + (profile.avatarUrl || 'assets/default-avatar.png') + ')'"></div>
+      <mat-card-title>{{ profile.displayName }}</mat-card-title>
+      <mat-card-subtitle>@{{ profile.userName }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-value">{{ profile.totalGames }}</span>
+          <span class="stat-label">Games Played</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">{{ profile.wins }}</span>
+          <span class="stat-label">Wins</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">{{ profile.applauseCount }}</span>
+          <span class="stat-label">Applause</span>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button mat-raised-button color="primary" (click)="toggleFollow(profile.id)">
+          {{ isFollowing ? 'Unfollow' : 'Follow' }}
+        </button>
+      </div>
+
+      <mat-tab-group class="social-tabs">
+        <mat-tab label="Followers">
+          <div class="user-list" *ngIf="followers$ | async as followers">
+            <div *ngFor="let user of followers" class="user-item" [routerLink]="['/profile', user.id]">
+              <img [src]="user.avatarUrl || 'assets/default-avatar.png'" alt="Avatar" class="mini-avatar">
+              <span>{{ user.displayName }}</span>
+            </div>
+            <div *ngIf="followers.length === 0" class="empty-msg">No followers yet.</div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Following">
+          <div class="user-list" *ngIf="following$ | async as following">
+            <div *ngFor="let user of following" class="user-item" [routerLink]="['/profile', user.id]">
+              <img [src]="user.avatarUrl || 'assets/default-avatar.png'" alt="Avatar" class="mini-avatar">
+              <span>{{ user.displayName }}</span>
+            </div>
+            <div *ngIf="following.length === 0" class="empty-msg">Not following anyone yet.</div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>

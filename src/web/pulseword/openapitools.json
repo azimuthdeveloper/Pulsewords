@@ -1,0 +1,22 @@
+{
+  "$schema": "node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+  "spaces": 2,
+  "generator-cli": {
+    "version": "7.2.0",
+    "generators": {
+      "pulseword-api": {
+        "generatorName": "typescript-angular",
+        "inputSpec": "http://localhost:5000/swagger/v1/swagger.json",
+        "output": "./src/app/api",
+        "additionalProperties": {
+          "ngVersion": "21.0.0",
+          "providedInRoot": true,
+          "serviceType": "class",
+          "stringEnums": true,
+          "useSingleRequestParameter": true,
+          "withInterfaces": true
+        }
+      }
+    }
+  }
+}

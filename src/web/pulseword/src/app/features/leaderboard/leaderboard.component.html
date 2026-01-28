@@ -1,0 +1,85 @@
+<div class="leaderboard-container">
+  <mat-card class="header-card">
+    <mat-card-header>
+      <mat-card-title>Leaderboard</mat-card-title>
+      <div class="date-selector">
+        <mat-form-field appearance="outline">
+          <mat-label>Choose a date</mat-label>
+          <input matInput [matDatepicker]="picker" [ngModel]="selectedDate()" (dateChange)="onDateChange($event)">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </mat-card-header>
+  </mat-card>
+
+  <div class="table-container mat-elevation-z8">
+    <div *ngIf="isLoading()" class="loading-shade">
+      <mat-spinner></mat-spinner>
+    </div>
+
+    <table mat-table [dataSource]="leaderboardData()" class="leaderboard-table">
+      <!-- Rank Column -->
+      <ng-container matColumnDef="rank">
+        <th mat-header-cell *matHeaderCellDef> Rank </th>
+        <td mat-cell *matCellDef="let entry">
+          <span class="rank-badge" [ngClass]="getRankClass(entry.rank)">
+            {{entry.rank}}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Player Column -->
+      <ng-container matColumnDef="player">
+        <th mat-header-cell *matHeaderCellDef> Player </th>
+        <td mat-cell *matCellDef="let entry">
+          <div class="player-info">
+            <img *ngIf="entry.avatarUrl" [src]="entry.avatarUrl" class="avatar" alt="avatar">
+            <mat-icon *ngIf="!entry.avatarUrl" class="avatar-placeholder">account_circle</mat-icon>
+            <span class="username" [class.current-user]="entry.isCurrentUser">
+              {{entry.username}}
+              <span *ngIf="entry.isCurrentUser" class="me-tag">(You)</span>
+            </span>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Time Column -->
+      <ng-container matColumnDef="time">
+        <th mat-header-cell *matHeaderCellDef> Time </th>
+        <td mat-cell *matCellDef="let entry"> {{entry.timeTakenMs / 1000 | number:'1.1-1'}}s </td>
+      </ng-container>
+
+      <!-- Guesses Column -->
+      <ng-container matColumnDef="guesses">
+        <th mat-header-cell *matHeaderCellDef> Guesses </th>
+        <td mat-cell *matCellDef="let entry"> {{entry.guessCount}} </td>
+      </ng-container>
+
+      <!-- Score Column -->
+      <ng-container matColumnDef="score">
+        <th mat-header-cell *matHeaderCellDef> Score </th>
+        <td mat-cell *matCellDef="let entry"> {{entry.score}} </td>
+      </ng-container>
+
+      <!-- Applause Column -->
+      <ng-container matColumnDef="applause">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let entry">
+          <button mat-icon-button (click)="sendApplause(entry)" [disabled]="entry.isCurrentUser" color="accent">
+            <mat-icon>volunteer_activism</mat-icon>
+            <span class="applause-count" *ngIf="entry.applauseCount > 0">{{entry.applauseCount}}</span>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [class.highlight-row]="row.isCurrentUser"></tr>
+    </table>
+
+    <div *ngIf="!isLoading() && leaderboardData().length === 0" class="empty-state">
+      <mat-icon>emoji_events</mat-icon>
+      <p>No games completed for this date yet. Be the first!</p>
+    </div>
+  </div>
+</div>

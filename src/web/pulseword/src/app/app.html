@@ -1,0 +1,54 @@
+<header class="app-header">
+  <nav>
+    <a routerLink="/" class="logo">PulseWord</a>
+    <div class="nav-links">
+      <a routerLink="/game" routerLinkActive="active">Game</a>
+      <a routerLink="/leaderboard" routerLinkActive="active">Leaderboard</a>
+      <a routerLink="/profile/me" routerLinkActive="active">Profile</a>
+      <app-theme-toggle></app-theme-toggle>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
+
+<style>
+  .app-header {
+    background-color: #333;
+    color: white;
+    padding: 1rem 2rem;
+  }
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+  }
+
+  .nav-links a {
+    color: white;
+    text-decoration: none;
+    margin-left: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+  }
+
+  .nav-links a.active {
+    background-color: #555;
+  }
+
+  main {
+    min-height: calc(100vh - 60px);
+  }
+</style>

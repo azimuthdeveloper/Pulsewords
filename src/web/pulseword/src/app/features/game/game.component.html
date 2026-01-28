@@ -1,0 +1,44 @@
+<div class="game-container">
+  <header>
+    <h1>PulseWord</h1>
+    <div class="timer" data-testid="timer">
+      Time: {{ status().timeLeft }}s
+    </div>
+  </header>
+
+  <div class="board">
+    @for (row of status().board; track $index) {
+      <div 
+        class="game-row" 
+        [attr.data-testid]="'game-row'" 
+        [attr.data-active]="$index === status().currentRow">
+        @for (tile of row; track $index) {
+          <div 
+            class="tile" 
+            [class]="getTileClass(tile.state)"
+            [class.has-letter]="tile.letter !== ''"
+            data-testid="tile">
+            {{ tile.letter }}
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="keyboard-container">
+    <app-keyboard 
+      [letterStates]="keyboardStates()"
+      (keyPress)="handleVirtualKey($event)">
+    </app-keyboard>
+  </div>
+
+  @if (status().isGameOver) {
+    <div class="modal-overlay">
+      <div class="modal-content">
+        <h2>{{ status().message }}</h2>
+        <p>Guesses: {{ status().currentRow }}</p>
+        <button (click)="window.location.reload()">Play Again</button>
+      </div>
+    </div>
+  }
+</div>

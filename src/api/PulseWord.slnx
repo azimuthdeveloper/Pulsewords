@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="PulseWord.Api.IntegrationTests/PulseWord.Api.IntegrationTests.csproj" />
+  <Project Path="PulseWord.Api/PulseWord.Api.csproj" />
+  <Project Path="PulseWord.Core/PulseWord.Core.csproj" />
+  <Project Path="PulseWord.Infrastructure/PulseWord.Infrastructure.csproj" />
+</Solution>

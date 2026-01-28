@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__PulseWord=${DATABASE_URL}
+      - JwtSettings__Key=${JWT_SECRET_KEY}
+      - JwtSettings__Issuer=${JWT_ISSUER:-pulseword}
+      - JwtSettings__Audience=${JWT_AUDIENCE:-pulseword-users}
+    restart: unless-stopped
+    networks:
+      - dokploy-network
+
+networks:
+  dokploy-network:
+    external: true

@@ -1,0 +1,42 @@
+# Git
+.git
+.gitignore
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# .NET
+**/bin/
+**/obj/
+**/out/
+
+# Angular
+**/node_modules/
+**/dist/
+**/.angular/
+
+# Test projects
+**/PulseWord.Api.IntegrationTests/
+**/test-results/
+**/e2e/
+
+# Node
+package-lock.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Test results
+**/TestResults/
+
+# Docker test files
+docker-compose.test.yml
+**/Dockerfile.test
+scripts/

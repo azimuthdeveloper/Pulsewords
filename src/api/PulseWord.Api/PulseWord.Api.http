@@ -1,0 +1,6 @@
+@PulseWord.Api_HostAddress = http://localhost:5159
+
+GET {{PulseWord.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

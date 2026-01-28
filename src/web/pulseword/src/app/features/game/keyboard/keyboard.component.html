@@ -1,0 +1,19 @@
+<div class="keyboard">
+  @for (row of rows; track $index) {
+    <div class="keyboard-row">
+      @for (key of row; track key) {
+        <button 
+          class="key" 
+          [class]="getKeyStateClass(key)"
+          [attr.data-testid]="'key-' + key.toLowerCase()"
+          (click)="onKeyClick(key)">
+          @if (key === 'BACKSPACE') {
+            <span>⌫</span>
+          } @else {
+            {{ key }}
+          }
+        </button>
+      }
+    </div>
+  }
+</div>

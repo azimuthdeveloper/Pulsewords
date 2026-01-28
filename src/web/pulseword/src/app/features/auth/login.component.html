@@ -1,0 +1,53 @@
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>Welcome to PulseWord</mat-card-title>
+      <mat-card-subtitle>Sign in to track your progress</mat-card-subtitle>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <mat-tab-group animationDuration="0ms">
+        <mat-tab label="Login">
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+            <mat-form-field appearance="outline">
+              <mat-label>Username</mat-label>
+              <input matInput formControlName="username" placeholder="Enter your username">
+              <mat-error *ngIf="loginForm.get('username')?.hasError('required')">Username is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Password</mat-label>
+              <input matInput formControlName="password" type="password" placeholder="Enter your password">
+              <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Password is required</mat-error>
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid || isLoading()">
+              Login
+            </button>
+          </form>
+        </mat-tab>
+        
+        <mat-tab label="Play Anonymously">
+          <form [formGroup]="anonymousForm" (ngSubmit)="onAnonymousSubmit()" class="auth-form">
+            <mat-form-field appearance="outline">
+              <mat-label>Display Name</mat-label>
+              <input matInput formControlName="displayName" placeholder="Enter a display name">
+              <mat-error *ngIf="anonymousForm.get('displayName')?.hasError('required')">Display name is required</mat-error>
+              <mat-error *ngIf="anonymousForm.get('displayName')?.hasError('minlength')">Minimum 3 characters</mat-error>
+            </mat-form-field>
+
+            <button mat-raised-button color="accent" type="submit" [disabled]="anonymousForm.invalid || isLoading()">
+              Play Anonymously
+            </button>
+          </form>
+        </mat-tab>
+      </mat-tab-group>
+
+      @if (error()) {
+        <div class="error-message">
+          {{ error() }}
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

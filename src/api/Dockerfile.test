@@ -1,0 +1,32 @@
+# Build stage
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+
+# Copy solution and projects
+COPY ["PulseWord.slnx", "."]
+COPY ["PulseWord.Api/PulseWord.Api.csproj", "PulseWord.Api/"]
+COPY ["PulseWord.Core/PulseWord.Core.csproj", "PulseWord.Core/"]
+COPY ["PulseWord.Infrastructure/PulseWord.Infrastructure.csproj", "PulseWord.Infrastructure/"]
+
+# Restore dependencies
+RUN dotnet restore
+
+# Copy everything else
+COPY . .
+
+# Build and publish
+RUN dotnet publish "PulseWord.Api/PulseWord.Api.csproj" -c Release -o /app/publish
+
+# Final stage
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
+WORKDIR /app
+COPY --from=build /app/publish .
+
+# Install dotnet-ef for migrations (optional, or run in entrypoint)
+# For simplicity in this test Dockerfile, we'll assume the app runs migrations on startup
+# Or we could use the SDK image as a base if we really need dotnet ef, but let's stick to aspnet for runtime.
+
+ENV ASPNETCORE_URLS=http://+:8080
+EXPOSE 8080
+
+ENTRYPOINT ["dotnet", "PulseWord.Api.dll"]
