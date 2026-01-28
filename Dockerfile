@@ -26,7 +26,7 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
 # Copy solution and project files for restore
-COPY src/api/PulseWord.sln .
+COPY src/api/PulseWord.slnx .
 COPY src/api/PulseWord.Core/PulseWord.Core.csproj PulseWord.Core/
 COPY src/api/PulseWord.Infrastructure/PulseWord.Infrastructure.csproj PulseWord.Infrastructure/
 COPY src/api/PulseWord.Api/PulseWord.Api.csproj PulseWord.Api/
