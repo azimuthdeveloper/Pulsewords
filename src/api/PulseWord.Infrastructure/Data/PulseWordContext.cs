@@ -16,6 +16,7 @@ public class PulseWordContext : DbContext
     public DbSet<LeaderboardEntry> LeaderboardEntries => Set<LeaderboardEntry>();
     public DbSet<Applause> Applauses => Set<Applause>();
     public DbSet<Follow> Follows => Set<Follow>();
+    public DbSet<DbSeed> DbSeeds => Set<DbSeed>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -106,6 +107,12 @@ public class PulseWordContext : DbContext
                 .WithMany(u => u.Followers)
                 .HasForeignKey(f => f.FolloweeId)
                 .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        // DbSeed Configuration - unique index on SeedName
+        modelBuilder.Entity<DbSeed>(entity =>
+        {
+            entity.HasIndex(s => s.SeedName).IsUnique();
         });
     }
 }

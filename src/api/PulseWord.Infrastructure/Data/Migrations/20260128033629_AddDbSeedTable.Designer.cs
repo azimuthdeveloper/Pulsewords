@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PulseWord.Infrastructure.Data;
@@ -11,9 +12,11 @@ using PulseWord.Infrastructure.Data;
 namespace PulseWord.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(PulseWordContext))]
-    partial class PulseWordContextModelSnapshot : ModelSnapshot
+    [Migration("20260128033629_AddDbSeedTable")]
+    partial class AddDbSeedTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
